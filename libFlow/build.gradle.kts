@@ -10,8 +10,8 @@ plugins {
 
 val libGroupId = "com.lib.xiaoming"
 val libArtifactId = "flow"
-val libVersionCode = 1
-val libVersionName = "0.1.0"
+val libVersionCode = 2
+val libVersionName = "1.0.0"
 
 
 android {

@@ -5,8 +5,10 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 /*
@@ -16,6 +18,7 @@ import kotlinx.coroutines.launch
  */
 
 
+//<editor-fold desc="流收集监听">
 /**
  * 流收集监听
  *
@@ -193,4 +196,34 @@ inline fun <T> Flow<T>.collectBoundLifecycle(
         collect(block)
     }
 }
+//</editor-fold>
+
+
+//<editor-fold desc="计时器">
+/**
+ * 计时器——倒数
+ *
+ * @param seconds 秒数
+ */
+fun timerByDown(seconds : Int) = flow {
+    var count = seconds
+    while (count >= 0) {
+        emit(count--)
+        delay(timeMillis = 1000)
+    }
+}
+
+/**
+ * 计时器——正数
+ *
+ * @param seconds 秒数
+ */
+fun timerByUp(seconds : Int) = flow {
+    var count = 0
+    while (count <= seconds) {
+        emit(count++)
+        delay(timeMillis = 1000)
+    }
+}
+//</editor-fold>
 
