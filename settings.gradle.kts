@@ -17,6 +17,11 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
     }
+    versionCatalogs {
+        create("config") {
+            from(files("gradle/config.versions.toml"))
+        }
+    }
 }
 
 rootProject.name = "Flow"

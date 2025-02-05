@@ -8,18 +8,18 @@ plugins {
 }
 
 
-val libGroupId = "com.lib.xiaoming"
-val libArtifactId = "flow"
-val libVersionCode = 2
-val libVersionName = "1.0.0"
+val libGroupId = config.versions.libGroupId.get()
+val libArtifactId = config.versions.libArtifactId.get()
+val libVersionCode = config.versions.libVersionCode.get()
+val libVersionName = config.versions.libVersionName.get()
 
 
 android {
     namespace = "com.zhang.lib.flow"
-    compileSdk = 34
+    compileSdk = config.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = 21
+        minSdk = config.versions.minSdk.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")

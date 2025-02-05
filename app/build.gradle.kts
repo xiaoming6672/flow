@@ -5,14 +5,14 @@ plugins {
 
 android {
     namespace = "com.zhang.flow.demo"
-    compileSdk = 34
+    compileSdk = config.versions.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.zhang.flow.demo"
-        minSdk = 24
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        minSdk = config.versions.minSdk.get().toInt()
+        targetSdk = config.versions.targetSdk.get().toInt()
+        versionCode = config.versions.libVersionCode.get().toInt()
+        versionName = config.versions.libVersionName.get()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

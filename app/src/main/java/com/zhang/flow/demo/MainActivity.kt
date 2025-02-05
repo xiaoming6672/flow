@@ -17,5 +17,15 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left , systemBars.top , systemBars.right , systemBars.bottom)
             insets
         }
+
+//        timer(1000).collect(this) {
+//            Log.d("ZHANG" , it.toString())
+//        }
+//        timer(1000) { "++$it" }.collect(this) {
+//            Log.d("ZHANG" , it.toString())
+//        }
+//        timer(1 , TimeUnit.MINUTES).collect(this) {
+//            Log.d("ZHANG" , it.toString())
+//        }
     }
 }

@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 
 /*
  * 流的拓展函数
@@ -200,12 +201,78 @@ inline fun <T> Flow<T>.collectBoundLifecycle(
 
 
 //<editor-fold desc="计时器">
+
+/**
+ * 计时器
+ *
+ * @param interval  发送间隔
+ * @param timeUnit  时间单位
+ */
+fun timer(interval : Int , timeUnit : TimeUnit) = when (timeUnit) {
+    TimeUnit.NANOSECONDS  -> timer(interval.div(1000L).div(1000))
+    TimeUnit.MICROSECONDS -> timer(interval.div(1000L))
+    TimeUnit.MILLISECONDS -> timer(interval.toLong())
+    TimeUnit.SECONDS      -> timer(interval.times(1000L))
+    TimeUnit.MINUTES      -> timer(interval.times(60).times(1000L))
+    TimeUnit.HOURS        -> timer(interval.times(60).times(60).times(1000L))
+    TimeUnit.DAYS         -> timer(interval.times(24).times(60).times(60).times(1000L))
+}
+
+/**
+ * 计时器
+ *
+ * @param interval 发送间隔，单位：毫秒
+ */
+fun timer(interval : Long) = flow {
+    var value = 0
+    while (true) {
+        emit(value++)
+        delay(interval)
+    }
+}
+
+/**
+ * 计时器
+ *
+ * @param interval  发送间隔
+ * @param timeUnit  时间单位
+ * @param map       数据转换
+ *
+ * @param T         泛型
+ */
+inline fun <T> timer(interval : Int , timeUnit : TimeUnit , crossinline map : (Int) -> T) = when (timeUnit) {
+    TimeUnit.NANOSECONDS  -> timer(interval.div(1000L).div(1000) , map)
+    TimeUnit.MICROSECONDS -> timer(interval.div(1000L) , map)
+    TimeUnit.MILLISECONDS -> timer(interval.toLong() , map)
+    TimeUnit.SECONDS      -> timer(interval.times(1000L) , map)
+    TimeUnit.MINUTES      -> timer(interval.times(60).times(1000L) , map)
+    TimeUnit.HOURS        -> timer(interval.times(60).times(60).times(1000L) , map)
+    TimeUnit.DAYS         -> timer(interval.times(24).times(60).times(60).times(1000L) , map)
+}
+
+
+/**
+ * 计时器
+ *
+ * @param interval  发送间隔，单位：毫秒
+ * @param map       数据转换
+ *
+ * @param T         泛型
+ */
+inline fun <T> timer(interval : Long , crossinline map : (Int) -> T) = flow {
+    var value = 0
+    while (true) {
+        emit(map(value++))
+        delay(interval)
+    }
+}
+
 /**
  * 计时器——倒数
  *
  * @param seconds 秒数
  */
-fun timerByDown(seconds : Int) = flow {
+fun timerDown(seconds : Int) = flow {
     var count = seconds
     while (count >= 0) {
         emit(count--)
@@ -218,7 +285,7 @@ fun timerByDown(seconds : Int) = flow {
  *
  * @param seconds 秒数
  */
-fun timerByUp(seconds : Int) = flow {
+fun timerUp(seconds : Int) = flow {
     var count = 0
     while (count <= seconds) {
         emit(count++)
