@@ -5,5 +5,5 @@ targetSdk = "34"
 
 libGroupId = "com.lib.xiaoming"
 libArtifactId = "flow"
-libVersionCode = "3"
-libVersionName = "1.1.0"
+libVersionCode = "4"
+libVersionName = "1.1.1"

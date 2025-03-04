@@ -281,6 +281,20 @@ fun timerDown(seconds : Int) = flow {
 }
 
 /**
+ * 计时器——倒数
+ *
+ * @param milliseconds 毫秒数
+ */
+fun timerDown(milliseconds : Long) = flow {
+    var count = milliseconds
+    while (count >= 0) {
+        emit(count)
+        count -= 1000
+        delay(timeMillis = 1000)
+    }
+}
+
+/**
  * 计时器——正数
  *
  * @param seconds 秒数
@@ -292,5 +306,6 @@ fun timerUp(seconds : Int) = flow {
         delay(timeMillis = 1000)
     }
 }
+
 //</editor-fold>
 
